@@ -10,7 +10,7 @@ import s from './Navbar.module.css';
 const Navbar = () => {
   const router = useRouter();
   const supabaseClient = useSupabaseClient();
-  const { user , subscription} = useUser();
+  const { user, subscription } = useUser();
 
   return (
     <nav className={s.root}>
@@ -24,12 +24,15 @@ const Navbar = () => {
               <Logo />
             </Link>
             <nav className="space-x-2 ml-6 hidden lg:block">
-            {!subscription &&   <Link href="/" className={s.link}>
-                Pricing
-              </Link> }
-              <Link href="/documents" className={s.link}>
-                Documents
-              </Link>
+              {!subscription ? (
+                <Link href="/" className={s.link}>
+                  Pricing
+                </Link>
+              ) : (
+                <Link href="/documents" className={s.link}>
+                  Documents
+                </Link>
+              )}
               <Link href="/account" className={s.link}>
                 Account
               </Link>
@@ -37,16 +40,28 @@ const Navbar = () => {
           </div>
 
           <div className="flex flex-1 justify-end space-x-8">
+            {subscription && (
+              <Link href="/documents" className={s.link}>
+                Documents
+              </Link>
+            )}
+
             {user ? (
-              <span
-                className={s.link}
-                onClick={async () => {
-                  await supabaseClient.auth.signOut();
-                  router.push('/signin');
-                }}
-              >
-                Sign out
-              </span>
+              <>
+                <Link href="/account" className={s.link}>
+                  Account
+                </Link>
+
+                <span
+                  className={s.link}
+                  onClick={async () => {
+                    await supabaseClient.auth.signOut();
+                    router.push('/signin');
+                  }}
+                >
+                  Sign out
+                </span>
+              </>
             ) : (
               <Link href="/signin" className={s.link}>
                 Sign in

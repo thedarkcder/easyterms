@@ -22,7 +22,6 @@ import {
   User
 } from '@supabase/auth-helpers-nextjs';
 
-/*
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
   const {
@@ -57,7 +56,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       user: session.user
     }
   };
-};*/
+};
 
 export default function Home() {
 
