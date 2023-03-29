@@ -35,13 +35,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       }
     };
 
-    if (!session)
-    return {
-      redirect: {
-        destination: '/signin',
-        permanent: false
-      }
-    };
+  console.log('session', session);
+  console.log('session.user', session.user);
 
   return {
     props: {
@@ -81,8 +76,6 @@ export default function Home() {
 
   useEffect(() => {
     textAreaRef.current?.focus();
-
-    
   }, []);
 
   //handle form submission
