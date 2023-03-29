@@ -8,6 +8,7 @@ import ReactMarkdown from 'react-markdown';
 import LoadingDots from '@/components/ui/LoadingDots';
 import { Document } from 'langchain/document';
 import { useUser } from '@/utils/useUser';
+import { Subscription } from 'types';
 
 import {
   Accordion,
@@ -37,6 +38,22 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   console.log('session', session);
   console.log('session.user', session.user);
+
+  const { data } = await supabase
+    .from('subscriptions')
+    .select('*, prices(*, products(*))')
+    .in('status', ['trialing', 'active'])
+    .single();
+
+  console.log(data);
+
+  if (!data)
+    return {
+      redirect: {
+        destination: '/signin',
+        permanent: false
+      }
+    };
 
   return {
     props: {
