@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
-import Layout from '@/components/Layout';
+
 import styles from '@/styles/Home.module.css';
 import { Message } from '@/types/chat';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
@@ -19,6 +19,7 @@ import {
   User
 } from '@supabase/auth-helpers-nextjs';
 
+/*
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
   const {
@@ -40,7 +41,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }
   };
 };
-
+*/
 
 export default function Home() {
   const [query, setQuery] = useState<string>('');
