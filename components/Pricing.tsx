@@ -88,7 +88,7 @@ export default function Pricing({ products }: Props) {
                   : 'ml-0.5 relative w-1/2 border border-transparent text-zinc-400'
               } rounded-md m-1 py-2 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
             >
-              Monthly billing
+              One off
             </button>
             <button
               onClick={() => setBillingInterval('month')}
@@ -147,7 +147,7 @@ export default function Pricing({ products }: Props) {
                       {priceString}
                     </span>
                     <span className="text-base font-medium text-zinc-100">
-                      /{billingInterval}
+                      /{billingInterval == 'one_time' ? '' : billingInterval }
                     </span>
                   </p>
                   <Button
