@@ -36,21 +36,16 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       }
     };
 
-  console.log('session', session);
-  console.log('session.user', session.user);
-
   const { data } = await supabase
     .from('subscriptions')
     .select('*, prices(*, products(*))')
     .in('status', ['trialing', 'active'])
     .single();
 
-  console.log(data);
-
   if (!data)
     return {
       redirect: {
-        destination: '/signin',
+        destination: '/pricing',
         permanent: false
       }
     };
@@ -64,7 +59,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 };
 
 export default function Home() {
-  const { subscription } = useUser();
 
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -365,9 +359,7 @@ export default function Home() {
           )}
         </main>
       </div>
-      <footer className="m-auto p-4">
-        <a href="https://twitter.com/mayowaoshin">Powered by Easy Terms AI</a>
-      </footer>
+  
     </section>
   );
 }
