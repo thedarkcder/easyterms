@@ -97,11 +97,16 @@ const uploadPhoto = async (
   });
 
   if (upload.ok) {
-    await createDocument({
-      name: filename
-    });
+    try {
+      await createDocument({
+        name: filename,
+        user_id: userDetails?.id
+      });
 
-    router.push('/documents');
+      router.push('/documents');
+    } catch (e) {
+      console.error('Upload failed.', e);
+    }
   } else {
     console.error('Upload failed.');
   }
