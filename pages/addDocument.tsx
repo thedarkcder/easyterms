@@ -10,6 +10,7 @@ import { useUser } from '@/utils/useUser';
 import { UserDetails, Subscription } from 'types';
 
 import { NextRouter, useRouter } from 'next/router';
+import { v4 as uuidv4 } from 'uuid';
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
@@ -81,8 +82,11 @@ const uploadPhoto = async (
   const filename = encodeURIComponent(file.name);
   const fileType = encodeURIComponent(file.type);
 
+  let myuuid = uuidv4();
+  const key = 'user/' + userDetails?.id + '/' + myuuid;
+
   const res = await fetch(
-    `/api/upload-url?file=${filename}&fileType=${fileType}&user=${userDetails?.id}`
+    `/api/upload-url?key=${key}&fileType=${fileType}&user=${userDetails?.id}`
   );
   const { url, fields } = await res.json();
   const formData = new FormData();
@@ -100,7 +104,8 @@ const uploadPhoto = async (
     try {
       await createDocument({
         name: filename,
-        user_id: userDetails?.id
+        user_id: userDetails?.id,
+        key: key
       });
 
       router.push('/documents');
