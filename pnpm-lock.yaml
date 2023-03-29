@@ -79,6 +79,9 @@ dependencies:
   tailwindcss:
     specifier: ^3.2.7
     version: 3.2.7(postcss@8.4.21)
+  uuid:
+    specifier: ^9.0.0
+    version: 9.0.0
 
 devDependencies:
   '@types/node':
