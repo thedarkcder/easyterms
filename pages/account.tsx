@@ -47,6 +47,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       }
     };
 
+    console.log('session', session)
+    console.log('session.user', session.user)
+
   return {
     props: {
       initialSession: session,
@@ -57,7 +60,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 export default function Account({ user }: { user: User }) {
   const [loading, setLoading] = useState(false);
-  const { isLoading, subscription, userDetails } = useUser();
+ // const { isLoading, subscription, userDetails } = useUser();
 
   const redirectToCustomerPortal = async () => {
     setLoading(true);

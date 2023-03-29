@@ -35,15 +35,14 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       }
     };
 
-  const { subscription } = useUser();
-
-  if (!subscription)
+    if (!session)
     return {
       redirect: {
-        destination: '/pricing',
+        destination: '/signin',
         permanent: false
       }
     };
+
   return {
     props: {
       initialSession: session,
@@ -53,6 +52,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 };
 
 export default function Home() {
+  const { subscription } = useUser();
 
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -79,10 +79,10 @@ export default function Home() {
   const messageListRef = useRef<HTMLDivElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  //const [say,setSay] = useState<Say>(new Say('darwin' || 'win32' || 'linux'))
-
   useEffect(() => {
     textAreaRef.current?.focus();
+
+    
   }, []);
 
   //handle form submission
