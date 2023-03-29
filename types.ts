@@ -10,6 +10,12 @@ export interface Customer {
   stripe_customer_id?: string;
 }
 
+export interface ChatDocument {
+  name: string;
+  created_at?: number;
+  namespace?: string;
+}
+
 export interface Product {
   id: string /* primary key */;
   active?: boolean;

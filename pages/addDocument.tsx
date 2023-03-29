@@ -4,6 +4,8 @@ import {
   User
 } from '@supabase/auth-helpers-nextjs';
 
+import { createDocument } from '@/utils/supabase-client';
+
 import { useUser } from '@/utils/useUser';
 import { UserDetails, Subscription } from 'types';
 
@@ -45,9 +47,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 
-
 export default function Upload() {
-
   const { isLoading, subscription, userDetails } = useUser();
 
   const router = useRouter();
@@ -59,13 +59,12 @@ export default function Upload() {
           <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
             Add new document
           </h1>
-    
         </div>
       </div>
 
-      <p>Upload a .pdf  (max 10MB).</p>
+      <p>Upload a .pdf (max 10MB).</p>
       <input
-        onChange={(e)=> uploadPhoto(e, userDetails, router)}
+        onChange={(e) => uploadPhoto(e, userDetails, router)}
         type="file"
         accept="application/pdf"
       />
@@ -73,7 +72,11 @@ export default function Upload() {
   );
 }
 
-const uploadPhoto = async (e: React.ChangeEvent<HTMLInputElement>, userDetails: UserDetails | null, router: NextRouter) => {
+const uploadPhoto = async (
+  e: React.ChangeEvent<HTMLInputElement>,
+  userDetails: UserDetails | null,
+  router: NextRouter
+) => {
   const file = e.target.files?.[0]!;
   const filename = encodeURIComponent(file.name);
   const fileType = encodeURIComponent(file.type);
@@ -94,9 +97,11 @@ const uploadPhoto = async (e: React.ChangeEvent<HTMLInputElement>, userDetails: 
   });
 
   if (upload.ok) {
+    await createDocument({
+      name: filename
+    });
 
     router.push('/documents');
-
   } else {
     console.error('Upload failed.');
   }
