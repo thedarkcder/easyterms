@@ -24,9 +24,9 @@ const Navbar = () => {
               <Logo />
             </Link>
             <nav className="space-x-2 ml-6 hidden lg:block">
-            {!subscription ? (  <Link href="/" className={s.link}>
+            {!subscription &&   <Link href="/" className={s.link}>
                 Pricing
-              </Link> ))
+              </Link> }
               <Link href="/documents" className={s.link}>
                 Documents
               </Link>
