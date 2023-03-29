@@ -144,6 +144,11 @@
 
 .markdownanswer {
   line-height: 1.75;
+
+}
+.markdownanswer  p{
+
+  color: #b13a3a;
 }
 
 .markdownanswer a:hover {

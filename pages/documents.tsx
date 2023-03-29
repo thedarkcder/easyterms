@@ -22,6 +22,7 @@ import {
   User
 } from '@supabase/auth-helpers-nextjs';
 
+/*
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
   const {
@@ -56,7 +57,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       user: session.user
     }
   };
-};
+};*/
 
 export default function Home() {
 
@@ -72,7 +73,7 @@ export default function Home() {
   }>({
     messages: [
       {
-        message: 'Hi, what would you like to learn about this legal case?',
+        message: 'Hi, what would you like to learn about this document?',
         type: 'apiMessage'
       }
     ],
@@ -323,7 +324,7 @@ export default function Home() {
                   placeholder={
                     loading
                       ? 'Waiting for response...'
-                      : 'What is this legal case about?'
+                      : 'What is this term on this agreement?'
                   }
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
