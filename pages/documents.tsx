@@ -11,7 +11,7 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
+  AccordionTrigger
 } from '@/components/ui/Accordion';
 import { GetServerSidePropsContext } from 'next';
 import {
@@ -57,11 +57,11 @@ export default function Home() {
     messages: [
       {
         message: 'Hi, what would you like to learn about this legal case?',
-        type: 'apiMessage',
-      },
+        type: 'apiMessage'
+      }
     ],
     history: [],
-    pendingSourceDocs: [],
+    pendingSourceDocs: []
   });
 
   const { messages, pending, history, pendingSourceDocs } = messageState;
@@ -94,10 +94,10 @@ export default function Home() {
         ...state.messages,
         {
           type: 'userMessage',
-          message: question,
-        },
+          message: question
+        }
       ],
-      pending: undefined,
+      pending: undefined
     }));
 
     setLoading(true);
@@ -110,16 +110,14 @@ export default function Home() {
       fetchEventSource('/api/chat', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           question,
-          history,
+          history
         }),
         signal: ctrl.signal,
         onmessage: (event) => {
-
-     
           if (event.data === '[DONE]') {
             setMessageState((state) => ({
               history: [...state.history, [question, state.pending ?? '']],
@@ -128,11 +126,11 @@ export default function Home() {
                 {
                   type: 'apiMessage',
                   message: state.pending ?? '',
-                  sourceDocs: state.pendingSourceDocs,
-                },
+                  sourceDocs: state.pendingSourceDocs
+                }
               ],
               pending: undefined,
-              pendingSourceDocs: undefined,
+              pendingSourceDocs: undefined
             }));
             setLoading(false);
             ctrl.abort();
@@ -141,16 +139,16 @@ export default function Home() {
             if (data.sourceDocs) {
               setMessageState((state) => ({
                 ...state,
-                pendingSourceDocs: data.sourceDocs,
+                pendingSourceDocs: data.sourceDocs
               }));
             } else {
               setMessageState((state) => ({
                 ...state,
-                pending: (state.pending ?? '') + data.data,
+                pending: (state.pending ?? '') + data.data
               }));
             }
           }
-        },
+        }
       });
     } catch (error) {
       setLoading(false);
@@ -168,7 +166,7 @@ export default function Home() {
         e.preventDefault();
       }
     },
-    [query],
+    [query]
   );
 
   const chatMessages = useMemo(() => {
@@ -179,10 +177,10 @@ export default function Home() {
             {
               type: 'apiMessage',
               message: pending,
-              sourceDocs: pendingSourceDocs,
-            },
+              sourceDocs: pendingSourceDocs
+            }
           ]
-        : []),
+        : [])
     ];
   }, [messages, pending, pendingSourceDocs]);
 
@@ -194,169 +192,163 @@ export default function Home() {
   }, [chatMessages]);
 
   return (
-    <>
+    <section className="bg-black mb-32">
 
-        <div className="mx-auto flex flex-col gap-4">
-          <h1 className="text-2xl font-bold leading-[1.1] tracking-tighter text-center">
-            Understand your legal terms
-          </h1>
-          <main className={styles.main}>
-            <div className={styles.cloud}>
-              <div ref={messageListRef} className={styles.messagelist}>
-                {chatMessages.map((message, index) => {
-                  let icon;
-                  let className;
-                  if (message.type === 'apiMessage') {
-                    icon = (
-                      <Image
-                        src="/bot-image.png"
-                        alt="AI"
-                        width="40"
-                        height="40"
-                        className={styles.boticon}
-                        priority
-                      />
-                    );
-                    className = styles.apimessage;
-                  } else {
-                    icon = (
-                      <Image
-                        src="/usericon.png"
-                        alt="Me"
-                        width="30"
-                        height="30"
-                        className={styles.usericon}
-                        priority
-                      />
-                    );
-                    // The latest message sent by the user will be animated while waiting for a response
-                    className =
-                      loading && index === chatMessages.length - 1
-                        ? styles.usermessagewaiting
-                        : styles.usermessage;
-                  }
-                  return (
-                    <>
-                      <div key={`chatMessage-${index}`} className={className}>
-                        {icon}
-                        <div className={styles.markdownanswer}>
-                          <ReactMarkdown linkTarget="_blank">
-                            {message.message}
-                          </ReactMarkdown>
-                        </div>
-                      </div>
-                      {message.sourceDocs && (
-                        <div
-                          className="p-5"
-                          key={`sourceDocsAccordion-${index}`}
-                        >
-                          <Accordion
-                            type="single"
-                            collapsible
-                            className="flex-col"
-                          >
-                            {message.sourceDocs.map((doc, index) => (
-                              <div key={`messageSourceDocs-${index}`}>
-                                <AccordionItem value={`item-${index}`}>
-                                  <AccordionTrigger>
-                                    <h3>Source {index + 1}</h3>
-                                  </AccordionTrigger>
-                                  <AccordionContent>
-                                    <ReactMarkdown linkTarget="_blank">
-                                      {doc.pageContent}
-                                    </ReactMarkdown>
-                                    <p className="mt-2">
-                                      <b>Source:</b> {doc.metadata.source}
-                                    </p>
-                                  </AccordionContent>
-                                </AccordionItem>
-                              </div>
-                            ))}
-                          </Accordion>
-                        </div>
-                      )}
-                    </>
+      <div className="mx-auto flex flex-col gap-4">
+        <h1 className="text-2xl font-bold leading-[1.1] tracking-tighter text-center">
+          Understand your legal terms
+        </h1>
+        <main className={styles.main}>
+          <div className={styles.cloud}>
+            <div ref={messageListRef} className={styles.messagelist}>
+              {chatMessages.map((message, index) => {
+                let icon;
+                let className;
+                if (message.type === 'apiMessage') {
+                  icon = (
+                    <Image
+                      src="/bot-image.png"
+                      alt="AI"
+                      width="40"
+                      height="40"
+                      className={styles.boticon}
+                      priority
+                    />
                   );
-                })}
-                {sourceDocs.length > 0 && (
-                  <div className="p-5">
-                    <Accordion type="single" collapsible className="flex-col">
-                      {sourceDocs.map((doc, index) => (
-                        <div key={`SourceDocs-${index}`}>
-                          <AccordionItem value={`item-${index}`}>
-                            <AccordionTrigger>
-                              <h3>Source {index + 1}</h3>
-                            </AccordionTrigger>
-                            <AccordionContent>
-                              <ReactMarkdown linkTarget="_blank">
-                                {doc.pageContent}
-                              </ReactMarkdown>
-                            </AccordionContent>
-                          </AccordionItem>
-                        </div>
-                      ))}
-                    </Accordion>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className={styles.center}>
-              <div className={styles.cloudform}>
-                <form onSubmit={handleSubmit}>
-                  <textarea
-                    disabled={loading}
-                    onKeyDown={handleEnter}
-                    ref={textAreaRef}
-                    autoFocus={false}
-                    rows={1}
-                    maxLength={512}
-                    id="userInput"
-                    name="userInput"
-                    placeholder={
-                      loading
-                        ? 'Waiting for response...'
-                        : 'What is this legal case about?'
-                    }
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    className={styles.textarea}
-                  />
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className={styles.generatebutton}
-                  >
-                    {loading ? (
-                      <div className={styles.loadingwheel}>
-                        <LoadingDots color="#000" />
+                  className = styles.apimessage;
+                } else {
+                  icon = (
+                    <Image
+                      src="/usericon.png"
+                      alt="Me"
+                      width="30"
+                      height="30"
+                      className={styles.usericon}
+                      priority
+                    />
+                  );
+                  // The latest message sent by the user will be animated while waiting for a response
+                  className =
+                    loading && index === chatMessages.length - 1
+                      ? styles.usermessagewaiting
+                      : styles.usermessage;
+                }
+                return (
+                  <>
+                    <div key={`chatMessage-${index}`} className={className}>
+                      {icon}
+                      <div className={styles.markdownanswer}>
+                        <ReactMarkdown linkTarget="_blank">
+                          {message.message}
+                        </ReactMarkdown>
                       </div>
-                    ) : (
-                      // Send icon SVG in input field
-                      <svg
-                        viewBox="0 0 20 20"
-                        className={styles.svgicon}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
-                      </svg>
+                    </div>
+                    {message.sourceDocs && (
+                      <div className="p-5" key={`sourceDocsAccordion-${index}`}>
+                        <Accordion
+                          type="single"
+                          collapsible
+                          className="flex-col"
+                        >
+                          {message.sourceDocs.map((doc, index) => (
+                            <div key={`messageSourceDocs-${index}`}>
+                              <AccordionItem value={`item-${index}`}>
+                                <AccordionTrigger>
+                                  <h3>Source {index + 1}</h3>
+                                </AccordionTrigger>
+                                <AccordionContent>
+                                  <ReactMarkdown linkTarget="_blank">
+                                    {doc.pageContent}
+                                  </ReactMarkdown>
+                                  <p className="mt-2">
+                                    <b>Source:</b> {doc.metadata.source}
+                                  </p>
+                                </AccordionContent>
+                              </AccordionItem>
+                            </div>
+                          ))}
+                        </Accordion>
+                      </div>
                     )}
-                  </button>
-                </form>
-              </div>
+                  </>
+                );
+              })}
+              {sourceDocs.length > 0 && (
+                <div className="p-5">
+                  <Accordion type="single" collapsible className="flex-col">
+                    {sourceDocs.map((doc, index) => (
+                      <div key={`SourceDocs-${index}`}>
+                        <AccordionItem value={`item-${index}`}>
+                          <AccordionTrigger>
+                            <h3>Source {index + 1}</h3>
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <ReactMarkdown linkTarget="_blank">
+                              {doc.pageContent}
+                            </ReactMarkdown>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </div>
+                    ))}
+                  </Accordion>
+                </div>
+              )}
             </div>
-            {error && (
-              <div className="border border-red-400 rounded-md p-4">
-                <p className="text-red-500">{error}</p>
-              </div>
-            )}
-          </main>
-        </div>
-        <footer className="m-auto p-4">
-          <a href="https://twitter.com/mayowaoshin">
-            Powered by Easy Terms AI
-          </a>
-        </footer>
-
-    </>
+          </div>
+          <div className={styles.center}>
+            <div className={styles.cloudform}>
+              <form onSubmit={handleSubmit}>
+                <textarea
+                  disabled={loading}
+                  onKeyDown={handleEnter}
+                  ref={textAreaRef}
+                  autoFocus={false}
+                  rows={1}
+                  maxLength={512}
+                  id="userInput"
+                  name="userInput"
+                  placeholder={
+                    loading
+                      ? 'Waiting for response...'
+                      : 'What is this legal case about?'
+                  }
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  className={styles.textarea}
+                />
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className={styles.generatebutton}
+                >
+                  {loading ? (
+                    <div className={styles.loadingwheel}>
+                      <LoadingDots color="#000" />
+                    </div>
+                  ) : (
+                    // Send icon SVG in input field
+                    <svg
+                      viewBox="0 0 20 20"
+                      className={styles.svgicon}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
+                    </svg>
+                  )}
+                </button>
+              </form>
+            </div>
+          </div>
+          {error && (
+            <div className="border border-red-400 rounded-md p-4">
+              <p className="text-red-500">{error}</p>
+            </div>
+          )}
+        </main>
+      </div>
+      <footer className="m-auto p-4">
+        <a href="https://twitter.com/mayowaoshin">Powered by Easy Terms AI</a>
+      </footer>
+    </section>
   );
 }
