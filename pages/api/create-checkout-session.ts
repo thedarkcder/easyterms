@@ -19,6 +19,7 @@ const CreateCheckoutSession: NextApiHandler = async (req, res) => {
         uuid: user?.id || '',
         email: user?.email || ''
       });
+  let session: Stripe.Checkout.Session;
 
       if (price.type === 'recurring') {
     session = await stripe.checkout.sessions.create({
