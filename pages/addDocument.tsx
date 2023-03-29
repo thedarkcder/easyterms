@@ -105,7 +105,7 @@ const uploadPhoto = async (
       await createDocument({
         name: filename,
         user_id: userDetails?.id,
-        key: key
+        namespace: myuuid
       });
 
       router.push('/documents');

@@ -15,7 +15,7 @@ export interface ChatDocument {
   created_at?: number;
   namespace?: string;
   user_id?: string;
-  key: string;
+
 }
 
 export interface Product {
