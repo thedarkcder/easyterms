@@ -1,3 +1,5 @@
+import Stripe from 'stripe';
+
 import { NextApiHandler } from 'next';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
