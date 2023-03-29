@@ -7,6 +7,8 @@ import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import LoadingDots from '@/components/ui/LoadingDots';
 import { Document } from 'langchain/document';
+import { useUser } from '@/utils/useUser';
+
 import {
   Accordion,
   AccordionContent,
@@ -19,7 +21,6 @@ import {
   User
 } from '@supabase/auth-helpers-nextjs';
 
-/*
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
   const {
@@ -34,6 +35,15 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       }
     };
 
+  const { subscription } = useUser();
+
+  if (!subscription)
+    return {
+      redirect: {
+        destination: '/pricing',
+        permanent: false
+      }
+    };
   return {
     props: {
       initialSession: session,
@@ -41,9 +51,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }
   };
 };
-*/
 
 export default function Home() {
+  c;
+
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [sourceDocs, setSourceDocs] = useState<Document[]>([]);
@@ -193,7 +204,6 @@ export default function Home() {
 
   return (
     <section className="bg-black mb-32">
-
       <div className="mx-auto flex flex-col gap-4">
         <h1 className="text-2xl font-bold leading-[1.1] tracking-tighter text-center">
           Understand your legal terms
@@ -323,7 +333,7 @@ export default function Home() {
                 >
                   {loading ? (
                     <div className={styles.loadingwheel}>
-                      <LoadingDots  />
+                      <LoadingDots />
                     </div>
                   ) : (
                     // Send icon SVG in input field
