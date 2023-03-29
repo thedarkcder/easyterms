@@ -20,25 +20,42 @@ const CreateCheckoutSession: NextApiHandler = async (req, res) => {
         email: user?.email || ''
       });
 
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        billing_address_collection: 'required',
-        customer,
-        line_items: [
-          {
-            price: price.id,
-            quantity
-          }
-        ],
-        mode: 'subscription',
-        allow_promotion_codes: true,
-        subscription_data: {
-          trial_from_plan: true,
-          metadata
-        },
-        success_url: `${getURL()}/account`,
-        cancel_url: `${getURL()}/`
-      });
+      if (price.type === 'recurring') {
+    session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      billing_address_collection: 'required',
+      customer,
+      line_items: [
+        {
+          price: price.id,
+          quantity
+        }
+      ],
+      mode: 'subscription',
+      allow_promotion_codes: true,
+      subscription_data: {
+        trial_from_plan: true,
+        metadata
+      },
+      success_url: `${getURL()}/account`,
+      cancel_url: `${getURL()}/`
+    });
+  } else if (price.type === 'one_time') {
+    session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      billing_address_collection: 'required',
+      customer,
+      line_items: [
+        {
+          price: price.id,
+          quantity
+        }
+      ],
+      mode: 'payment',
+      success_url: `${getURL()}/account`,
+      cancel_url: `${getURL()}/`
+    });
+  }
 
       return res.status(200).json({ sessionId: session.id });
     } catch (err: any) {
