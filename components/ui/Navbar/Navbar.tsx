@@ -20,9 +20,16 @@ const Navbar = () => {
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex justify-between align-center flex-row py-4 md:py-6 relative">
           <div className="flex flex-1 items-center">
-            <Link href="/" className={s.logo} aria-label="Logo">
-              <Logo />
-            </Link>
+            {!user ? (
+              <Link href="/" className={s.logo} aria-label="Logo">
+                <Logo />
+              </Link>
+            ) : (
+              <Link href="/account" className={s.link}>
+                Account
+              </Link>
+            )}
+
             <nav className="space-x-2 ml-6 hidden lg:block">
               {!subscription ? (
                 <Link href="/" className={s.link}>
@@ -47,21 +54,15 @@ const Navbar = () => {
             )}
 
             {user ? (
-              <>
-                <Link href="/account" className={s.link}>
-                  Account
-                </Link>
-
-                <span
-                  className={s.link}
-                  onClick={async () => {
-                    await supabaseClient.auth.signOut();
-                    router.push('/signin');
-                  }}
-                >
-                  Sign out
-                </span>
-              </>
+              <span
+                className={s.link}
+                onClick={async () => {
+                  await supabaseClient.auth.signOut();
+                  router.push('/signin');
+                }}
+              >
+                Sign out
+              </span>
             ) : (
               <Link href="/signin" className={s.link}>
                 Sign in
