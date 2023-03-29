@@ -36,25 +36,30 @@ const Navbar = () => {
                   Pricing
                 </Link>
               ) : (
+                <>
                 <Link href="/documents" className={s.link}>
                   Documents
                 </Link>
+             
+               </>
+
               )}
               <Link href="/account" className={s.link}>
                 Account
               </Link>
+
+              <Link href="/addDocument" className={s.link}>
+                Add document
+               </Link>
             </nav>
           </div>
 
           <div className="flex flex-1 justify-end space-x-8">
-            {subscription ? 
+            {subscription && (
               <Link href="/documents" className={s.link}>
                 Documents
-              </Link> :
-                <Link href="/documents" className={s.link}>
-                Pricing
               </Link>
-            }
+            )}
 
             {user ? (
               <span
