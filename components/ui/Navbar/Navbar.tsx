@@ -10,7 +10,7 @@ import s from './Navbar.module.css';
 const Navbar = () => {
   const router = useRouter();
   const supabaseClient = useSupabaseClient();
-  const { user } = useUser();
+  const { user , subscription} = useUser();
 
   return (
     <nav className={s.root}>
@@ -24,9 +24,9 @@ const Navbar = () => {
               <Logo />
             </Link>
             <nav className="space-x-2 ml-6 hidden lg:block">
-              <Link href="/" className={s.link}>
+            {!subscription ? (  <Link href="/" className={s.link}>
                 Pricing
-              </Link>
+              </Link> ))
               <Link href="/documents" className={s.link}>
                 Documents
               </Link>
