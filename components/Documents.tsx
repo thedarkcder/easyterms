@@ -67,7 +67,7 @@ export default function Documents({ documents }: Props) {
                 onClick={() => loadDocument(document)}
                 className="mt-8 block w-full rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-zinc-900"
               >
-                {document.name}
+                Understand
               </Button>
             </div>
           </div>
