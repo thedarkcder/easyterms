@@ -54,13 +54,18 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       }
     };
 
+  const { data: chatDocuments, error } = await supabase
+    .from('documents')
+    .select('*')
+    .order('name');
+
   const documents = await getUserDocuments(session.user);
 
   return {
     props: {
       initialSession: session,
       user: session.user,
-      documents: documents
+      documents: chatDocuments
     }
   };
 };
