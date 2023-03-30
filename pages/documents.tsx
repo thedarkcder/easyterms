@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
-import { GetStaticPropsResult } from 'next';
 import { useRouter } from 'next/router';
 
 import styles from '@/styles/Home.module.css';
@@ -67,16 +66,6 @@ interface Props {
   documents: ChatDocument[];
 }
 
-export async function getStaticProps(): Promise<GetStaticPropsResult<Props>> {
-  const documents = await getUserDocuments();
-
-  return {
-    props: {
-      documents
-    },
-    revalidate: 60
-  };
-}
 
 export default function DocumentsPage({ documents }: Props) {
   const router = useRouter();
