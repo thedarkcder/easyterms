@@ -337,9 +337,7 @@ export default function DocumentsPage({ documents, user }: Props) {
               )}
             </div>
           </div>
-          <div>
-            <Documents documents={documents} />
-          </div>
+
           <div className={styles.center}>
             <div className={styles.cloudform}>
               <form onSubmit={handleSubmit}>
@@ -382,6 +380,10 @@ export default function DocumentsPage({ documents, user }: Props) {
                   )}
                 </button>
               </form>
+            </div>
+
+            <div>
+              <Documents documents={documents} />
             </div>
           </div>
           {error && (
