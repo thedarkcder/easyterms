@@ -248,9 +248,13 @@ export default function DocumentsPage({ documents, user }: Props) {
         </h1>
 
         <main className={styles.main}>
-          <div>
+        <div className="mx-auto flex flex-col gap-4">
+
+        <div className={styles.center}>
             <Documents documents={documents} />
           </div>
+          </div>
+          <div className="mx-auto flex flex-col gap-4">
 
           <div className={styles.cloud}>
             <div ref={messageListRef} className={styles.messagelist}>
@@ -398,6 +402,8 @@ export default function DocumentsPage({ documents, user }: Props) {
               <p className="text-red-500">{error}</p>
             </div>
           )}
+            </div>
+
         </main>
       </div>
     </section>
