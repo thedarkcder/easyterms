@@ -7,7 +7,7 @@ import Button from '@/components/ui/Button';
 import { useUser } from '@/utils/useUser';
 
 import { ChatDocument } from 'types';
-import s from 'ui/Navbar/Navbar.module.css';
+import s from '@/components/ui/Navbar/Navbar.module.css';
 
 interface Props {
   documents: ChatDocument[];
