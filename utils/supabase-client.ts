@@ -43,12 +43,13 @@ export const createDocument = async (document: ChatDocument) => {
 };
 
 
-export const getUserDocuments = async (): Promise<
+export const getUserDocuments = async (user: User): Promise<
   ChatDocument[]
 > => {
   const { data, error } = await supabase
     .from('documents')
     .select('*')
+    .eq('id', user.id)
     .order('name');
 
 
