@@ -54,10 +54,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       }
     };
 
+  const documents = await getUserDocuments();
+
   return {
     props: {
       initialSession: session,
-      user: session.user
+      user: session.user,
+      documents: documents
     }
   };
 };
@@ -66,8 +69,9 @@ interface Props {
   documents: ChatDocument[];
 }
 
-
 export default function DocumentsPage({ documents }: Props) {
+console.log('docus', documents)
+
   const router = useRouter();
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { GetStaticPropsResult } from 'next';
+
 
 import cn from 'classnames';
 import Link from 'next/link';
@@ -10,22 +10,12 @@ import { useUser } from '@/utils/useUser';
 
 import { ChatDocument } from 'types';
 import s from '@/components/ui/Navbar/Navbar.module.css';
-import { getUserDocuments } from '@/utils/supabase-client';
+
+
 interface Props {
   documents: ChatDocument[];
 }
 
-export async function getStaticProps(): Promise<GetStaticPropsResult<Props>> {
-    const documents = await getUserDocuments();
-  
-    return {
-      props: {
-        documents
-      },
-      revalidate: 60
-    };
-  }
-  
 
 export default function Documents({ documents }: Props) {
   const router = useRouter();
