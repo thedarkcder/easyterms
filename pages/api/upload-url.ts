@@ -7,11 +7,7 @@ export default async function handler(
 ) {
   const s3 = new S3({
     apiVersion: '2006-03-01',
-    region: process.env.CLOUD_REGION,
-    credentials: {
-      accessKeyId: process.env.CLOUD_ACCESS_KEY_ID + '',
-      secretAccessKey: process.env.CLOUD_SECRET_ACCESS_KEY + ''
-    }
+    region: process.env.CLOUD_REGION
   });
 
   const post = await s3.createPresignedPost({
