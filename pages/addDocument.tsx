@@ -12,7 +12,6 @@ import { UserDetails, Subscription } from 'types';
 import { NextRouter, useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 
-
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
   const {
@@ -83,6 +82,10 @@ const uploadPhoto = async (
   const filename = encodeURIComponent(file.name);
   const fileType = encodeURIComponent(file.type);
 
+  console.log('s:', process.env.CLOUD_ACCESS_KEY_ID );
+  console.log('d:', process.env.CLOUD_SECRET_ACCESS_KEY);
+  console.log('PINECONE_INDEX_NAME:', process.env.PINECONE_INDEX_NAME );
+  
   let myuuid = uuidv4();
   const key = 'user/' + userDetails?.id + '/' + myuuid + '.pdf';
 
