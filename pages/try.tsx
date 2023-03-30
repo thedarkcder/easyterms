@@ -1,6 +1,4 @@
 import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
-import { GetStaticPropsResult } from 'next';
-import { useRouter } from 'next/router';
 
 import styles from '@/styles/Home.module.css';
 import { Message } from '@/types/chat';
@@ -11,9 +9,6 @@ import LoadingDots from '@/components/ui/LoadingDots';
 import { Document } from 'langchain/document';
 import { useUser } from '@/utils/useUser';
 import { Subscription } from 'types';
-import { ChatDocument } from 'types';
-import { getUserDocuments } from '@/utils/supabase-client';
-import Documents from '@/components/Documents';
 
 import {
   Accordion,
@@ -63,23 +58,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 
-interface Props {
-  documents: ChatDocument[];
-}
-
-export async function getStaticProps(): Promise<GetStaticPropsResult<Props>> {
-  const documents = await getUserDocuments();
-
-  return {
-    props: {
-      documents
-    },
-    revalidate: 60
-  };
-}
-
-export default function DocumentsPage({ documents }: Props) {
-  const router = useRouter();
+export default function Home() {
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [sourceDocs, setSourceDocs] = useState<Document[]>([]);
@@ -99,12 +78,6 @@ export default function DocumentsPage({ documents }: Props) {
     history: [],
     pendingSourceDocs: []
   });
-
-  if (!router.query.n) {
-    router.push({
-      pathname: '/addDocument'
-    });
-  }
 
   const { messages, pending, history, pendingSourceDocs } = messageState;
 
@@ -146,7 +119,7 @@ export default function DocumentsPage({ documents }: Props) {
 
     const ctrl = new AbortController();
 
-    const namespace = router.query.n;
+    const namespace = '982a4561-5602-40b2-a601-658a6d00ca2e';
 
     try {
       fetchEventSource('/api/chat', {
@@ -336,9 +309,6 @@ export default function DocumentsPage({ documents }: Props) {
                 </div>
               )}
             </div>
-          </div>
-          <div>
-            <Documents documents={documents} />
           </div>
           <div className={styles.center}>
             <div className={styles.cloudform}>

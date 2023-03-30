@@ -42,3 +42,19 @@ export const createDocument = async (document: ChatDocument) => {
     .eq('namespace', document.namespace);;
 };
 
+
+export const getUserDocuments = async (): Promise<
+  ChatDocument[]
+> => {
+  const { data, error } = await supabase
+    .from('documents')
+    .select('*')
+    .order('name');
+
+
+  if (error) {
+    console.log(error.message);
+  }
+  // TODO: improve the typing here.
+  return (data as any) || [];
+};
