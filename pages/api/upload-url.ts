@@ -6,8 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const s3 = new S3({
-    apiVersion: '2006-03-01',
-    region: process.env.CLOUD_REGION
+    apiVersion: '2006-03-01'
   });
 
   const post = await s3.createPresignedPost({
