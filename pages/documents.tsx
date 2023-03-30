@@ -100,11 +100,11 @@ export default function DocumentsPage({ documents, user }: Props) {
     pendingSourceDocs: []
   });
 
-  /* if (!router.query.n) {
+  if (!router.query.n) {
     router.push({
       pathname: '/addDocument'
     });
-  }*/
+  }
 
   const { messages, pending, history, pendingSourceDocs } = messageState;
 
@@ -234,12 +234,19 @@ export default function DocumentsPage({ documents, user }: Props) {
     }
   }, [chatMessages]);
 
+  const getCurrentDocument = () => {
+    const namespace = router.query.n;
+
+    return documents.find((s) => s.namespace == namespace)?.name;
+  };
+
   return (
     <section className="bg-black mb-32">
       <div className="mx-auto flex flex-col gap-4">
         <h1 className="text-2xl font-bold leading-[1.1] tracking-tighter text-center">
-          Understand your legal terms
+          {getCurrentDocument()}
         </h1>
+
         <main className={styles.main}>
           <div>
             <Documents documents={documents} />
