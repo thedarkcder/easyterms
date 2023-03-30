@@ -100,7 +100,7 @@ export default function DocumentsPage({ documents, user }: Props) {
     pendingSourceDocs: []
   });
 
-  if (!router.query.n) {
+  if (!documents.length) {
     router.push({
       pathname: '/addDocument'
     });
