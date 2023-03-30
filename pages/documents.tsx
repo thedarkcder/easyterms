@@ -67,10 +67,12 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 interface Props {
   documents: ChatDocument[];
+  user: User
 }
 
-export default function DocumentsPage({ documents }: Props) {
+export default function DocumentsPage({ documents, user }: Props) {
 console.log('docus', documents)
+console.log('user', user)
 
   const router = useRouter();
   const [query, setQuery] = useState<string>('');
@@ -93,11 +95,11 @@ console.log('docus', documents)
     pendingSourceDocs: []
   });
 
-  if (!router.query.n) {
+ /* if (!router.query.n) {
     router.push({
       pathname: '/addDocument'
     });
-  }
+  }*/
 
   const { messages, pending, history, pendingSourceDocs } = messageState;
 
