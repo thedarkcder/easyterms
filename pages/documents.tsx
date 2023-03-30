@@ -241,6 +241,10 @@ export default function DocumentsPage({ documents, user }: Props) {
           Understand your legal terms
         </h1>
         <main className={styles.main}>
+          <div>
+            <Documents documents={documents} />
+          </div>
+
           <div className={styles.cloud}>
             <div ref={messageListRef} className={styles.messagelist}>
               {chatMessages.map((message, index) => {
@@ -380,10 +384,6 @@ export default function DocumentsPage({ documents, user }: Props) {
                   )}
                 </button>
               </form>
-            </div>
-
-            <div>
-              <Documents documents={documents} />
             </div>
           </div>
           {error && (
