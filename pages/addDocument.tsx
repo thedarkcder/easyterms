@@ -85,6 +85,7 @@ const uploadPhoto = async (
   console.log('s:', process.env.CLOUD_ACCESS_KEY_ID );
   console.log('d:', process.env.CLOUD_SECRET_ACCESS_KEY);
   console.log('PINECONE_INDEX_NAME:', process.env.PINECONE_INDEX_NAME );
+  console.log('SUPABASE_SERVICE_ROLE_KEY:', process.env.SUPABASE_SERVICE_ROLE_KEY );
   
   let myuuid = uuidv4();
   const key = 'user/' + userDetails?.id + '/' + myuuid + '.pdf';
