@@ -84,7 +84,7 @@ const uploadPhoto = async (
   const fileType = encodeURIComponent(file.type);
 
   let myuuid = uuidv4();
-  const key = 'user/' + userDetails?.id + '/' + myuuid;
+  const key = 'user/' + userDetails?.id + '/' + myuuid + '.pdf';
 
   const res = await fetch(
     `/api/upload-url?key=${key}&fileType=${fileType}&user=${userDetails?.id}`
