@@ -59,7 +59,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 };
 
 export default function Home() {
-
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [sourceDocs, setSourceDocs] = useState<Document[]>([]);
@@ -120,6 +119,8 @@ export default function Home() {
 
     const ctrl = new AbortController();
 
+    const namespace = '982a4561-5602-40b2-a601-658a6d00ca2e';
+
     try {
       fetchEventSource('/api/chat', {
         method: 'POST',
@@ -128,7 +129,8 @@ export default function Home() {
         },
         body: JSON.stringify({
           question,
-          history
+          history,
+          namespace
         }),
         signal: ctrl.signal,
         onmessage: (event) => {
@@ -359,7 +361,6 @@ export default function Home() {
           )}
         </main>
       </div>
-  
     </section>
   );
 }
