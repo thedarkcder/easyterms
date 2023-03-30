@@ -49,7 +49,6 @@ export const getUserDocuments = async (user: User): Promise<
   const { data, error } = await supabase
     .from('documents')
     .select('*')
-   // .eq('user_id', user.id)
     .order('name');
 
 
